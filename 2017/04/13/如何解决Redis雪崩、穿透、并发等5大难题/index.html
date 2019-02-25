@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="高并发架构系列,">
 
 
 
@@ -79,17 +79,18 @@
 
 
 
-<meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta name="description" content="一、缓存雪崩数据未加载到缓存中，或者缓存同一时间大面积失效，从而导致所有请求都去查数据库，导致数据库CPU和内存负载过高，甚至宕机。 比如一个雪崩的简单过程:1、redis集群大面积故障 2、缓存失效，但依然大量请求访问缓存服务redis 3、redis大量失效后，大量请求转向到mysql数据库 4、mysql的调用量暴增，很快扛不住了，甚至直接宕机 5、由于大量的应用服务依赖mysql和redi">
+<meta name="keywords" content="高并发架构系列">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="http://yoursite.com/2019/02/19/hello-world/index.html">
+<meta property="og:title" content="如何解决Redis雪崩、穿透、并发等5大难题">
+<meta property="og:url" content="http://yoursite.com/2017/04/13/如何解决Redis雪崩、穿透、并发等5大难题/index.html">
 <meta property="og:site_name" content="Rookie.良">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta property="og:description" content="一、缓存雪崩数据未加载到缓存中，或者缓存同一时间大面积失效，从而导致所有请求都去查数据库，导致数据库CPU和内存负载过高，甚至宕机。 比如一个雪崩的简单过程:1、redis集群大面积故障 2、缓存失效，但依然大量请求访问缓存服务redis 3、redis大量失效后，大量请求转向到mysql数据库 4、mysql的调用量暴增，很快扛不住了，甚至直接宕机 5、由于大量的应用服务依赖mysql和redi">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-10-28T00:39:58.000Z">
+<meta property="og:updated_time" content="2019-02-25T14:29:52.624Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hello World">
-<meta name="twitter:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta name="twitter:title" content="如何解决Redis雪崩、穿透、并发等5大难题">
+<meta name="twitter:description" content="一、缓存雪崩数据未加载到缓存中，或者缓存同一时间大面积失效，从而导致所有请求都去查数据库，导致数据库CPU和内存负载过高，甚至宕机。 比如一个雪崩的简单过程:1、redis集群大面积故障 2、缓存失效，但依然大量请求访问缓存服务redis 3、redis大量失效后，大量请求转向到mysql数据库 4、mysql的调用量暴增，很快扛不住了，甚至直接宕机 5、由于大量的应用服务依赖mysql和redi">
 
 
 
@@ -119,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/02/19/hello-world/">
+  <link rel="canonical" href="http://yoursite.com/2017/04/13/如何解决Redis雪崩、穿透、并发等5大难题/">
 
 
 
 
 
-  <title>Hello World | Rookie.良</title>
+  <title>如何解决Redis雪崩、穿透、并发等5大难题 | Rookie.良</title>
   
 
 
@@ -252,7 +253,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/19/hello-world/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/13/如何解决Redis雪崩、穿透、并发等5大难题/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Mr.良">
@@ -269,7 +270,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Hello World</h1>
+          <h1 class="post-title" itemprop="name headline">如何解决Redis雪崩、穿透、并发等5大难题</h1>
         
 
         <div class="post-meta">
@@ -281,8 +282,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-19T20:16:53+08:00">
-                2019-02-19
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-13T05:34:35+08:00">
+                2017-04-13
               </time>
             
 
@@ -319,15 +320,25 @@
       
 
       
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+        <h3 id="一、缓存雪崩"><a href="#一、缓存雪崩" class="headerlink" title="一、缓存雪崩"></a>一、缓存雪崩</h3><p>数据未加载到缓存中，或者缓存同一时间大面积失效，从而导致所有请求都去查数据库，导致数据库CPU和内存负载过高，甚至宕机。</p>
+<h4 id="比如一个雪崩的简单过程"><a href="#比如一个雪崩的简单过程" class="headerlink" title="比如一个雪崩的简单过程:"></a>比如一个雪崩的简单过程:</h4><p>1、redis集群大面积故障</p>
+<p>2、缓存失效，但依然大量请求访问缓存服务redis</p>
+<p>3、redis大量失效后，大量请求转向到mysql数据库</p>
+<p>4、mysql的调用量暴增，很快扛不住了，甚至直接宕机</p>
+<p>5、由于大量的应用服务依赖mysql和redis的服务，这个时候很快会演变成各服务器集群的雪崩，最后网站彻底崩溃。</p>
+<h3 id="二、如何预防缓存雪崩"><a href="#二、如何预防缓存雪崩" class="headerlink" title="二、如何预防缓存雪崩"></a>二、如何预防缓存雪崩</h3><p>提前演练、服务降级、高可用、缓存备份(快速预热)</p>
+<h4 id="1-缓存的高可用性"><a href="#1-缓存的高可用性" class="headerlink" title="1.缓存的高可用性"></a>1.缓存的高可用性</h4><p>缓存层设计成高可用，防止缓存大面积故障。即使个别节点、个别机器、甚至是机房宕掉，依然可以提供服务。例如Redis Sentinel 和 Redis Cluster 都实现了高可用。</p>
+<h4 id="2-缓存降级"><a href="#2-缓存降级" class="headerlink" title="2.缓存降级"></a>2.缓存降级</h4><p>可以利用ehcache等本地缓存，但主要还是对源服务访问进行限流、资源隔离（熔断）、降级等。</p>
+<p>当访问量剧增、服务出现问题仍然需要保证服务还是可用的。系统可以根据一些关键数据进行自动降级，也可以配置开关进行人工降级，这里涉及到运维的配合。</p>
+<p>降级的最终目的是保证核心服务可用，即使是有损的。</p>
+<p>比如推荐服务中，很多都是个性化的需求，假如个性化需求不能提供服务了，可以降级补充热点数据，不至于造成前端页面出现大面积空白。</p>
+<p>在进行降级之前要对系统进行梳理，比如：哪些业务是核心(必须保证)，哪些业务可以容许暂时不提供服务(利用静态页面替换)等，以及配合服务器核心指标，在设置整体预案，比如：<br>(1) 一般:比如有些服务偶尔因为网络抖动或者服务正在上线而超时，可以自动降级；<br>(2) 警告:有些服务在一段时间内成功率有波动(如在95~100%之间)，可以自动降级或人工降级，并发出告警；<br>(3) 错误:比如可用率低于90%，或者数据库连接池满了，或者访问量突增到系统阈值，此时可以根据情况进行自动降级或人工降级；<br>(4) 严重错误:比如因为特殊原因数据错误了，此时就需人工降级；</p>
+<h4 id="3-Redis备份和快速预热"><a href="#3-Redis备份和快速预热" class="headerlink" title="3.Redis备份和快速预热"></a>3.Redis备份和快速预热</h4><p>1.Redis数据备份和恢复<br>2.快速缓存预热</p>
+<h4 id="4-提前演练"><a href="#4-提前演练" class="headerlink" title="4.提前演练"></a>4.提前演练</h4><p>上线前，针对缓存层宕机，服务端的负载情况以及可能出现的问题，对高可用的提前演练，提前规避问题。</p>
+<h3 id="三、缓存穿透"><a href="#三、缓存穿透" class="headerlink" title="三、缓存穿透"></a>三、缓存穿透</h3><p>缓存穿透是指查询一个不存在的数据。例如：从redis缓存中没有命中，需要从mysql中进行查询，查不到数据则不写入缓存，这将导致不存在的数据每次都会去数据库中查询，造成缓存穿透。</p>
+<p>解决思路：如果缓存未命中并且数据库中不存在，可直接设置一个默认值在缓存中，这样再次访问可在缓存中得到值，无需访问数据库。设置一个有过期时间的值或者当mysql中有值时将其替代即可。<br>可以给key设置一些格式规则，然后查询之前先过滤掉不符合规则的key。</p>
+<h3 id="四、缓存并发"><a href="#四、缓存并发" class="headerlink" title="四、缓存并发"></a>四、缓存并发</h3><p>这里的并发指的是多个redis的client同时setkey引起的并发问题。其实redis本身就是单线程操作，多个client同时操作，按照先到先执行的原则，先到的先执行，其余的阻塞。另外的解决方案是把redis。setkey操作放在队列中使其串行化，必须一个一个执行。</p>
+<h3 id="五、缓存预热"><a href="#五、缓存预热" class="headerlink" title="五、缓存预热"></a>五、缓存预热</h3><p>缓存预热就是系统上线后，将相关的缓存数据直接加载到缓存系统。这样就可以避免客户端请求进来时，先查询数据库库，然后再将数据缓存的问题！<br>解决思路:<br>1.直接写个缓存刷新页面，上线时手工操作下；<br>2.数据量不大时，可以在项目启动时初始化加载；<br>其目的就是在系统上线前，将数据缓存。</p>
 
       
     </div>
@@ -343,6 +354,12 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/高并发架构系列/" rel="tag"># 高并发架构系列</a>
+          
+        </div>
+      
 
       
       
@@ -352,8 +369,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/04/18/消息队列的使用/" rel="next" title="消息队列的使用">
-                <i class="fa fa-chevron-left"></i> 消息队列的使用
+              <a href="/2017/03/11/SpringBoot常用注解大全/" rel="next" title="SpringBoot常用注解大全">
+                <i class="fa fa-chevron-left"></i> SpringBoot常用注解大全
               </a>
             
           </div>
@@ -361,6 +378,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/04/18/消息队列的使用/" rel="prev" title="消息队列的使用">
+                消息队列的使用 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -483,7 +504,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Quick-Start"><span class="nav-number">1.</span> <span class="nav-text">Quick Start</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Create-a-new-post"><span class="nav-number">1.1.</span> <span class="nav-text">Create a new post</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Run-server"><span class="nav-number">1.2.</span> <span class="nav-text">Run server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Generate-static-files"><span class="nav-number">1.3.</span> <span class="nav-text">Generate static files</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Deploy-to-remote-sites"><span class="nav-number">1.4.</span> <span class="nav-text">Deploy to remote sites</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#一、缓存雪崩"><span class="nav-number">1.</span> <span class="nav-text">一、缓存雪崩</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#比如一个雪崩的简单过程"><span class="nav-number">1.1.</span> <span class="nav-text">比如一个雪崩的简单过程:</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二、如何预防缓存雪崩"><span class="nav-number">2.</span> <span class="nav-text">二、如何预防缓存雪崩</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-缓存的高可用性"><span class="nav-number">2.1.</span> <span class="nav-text">1.缓存的高可用性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-缓存降级"><span class="nav-number">2.2.</span> <span class="nav-text">2.缓存降级</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-Redis备份和快速预热"><span class="nav-number">2.3.</span> <span class="nav-text">3.Redis备份和快速预热</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-提前演练"><span class="nav-number">2.4.</span> <span class="nav-text">4.提前演练</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三、缓存穿透"><span class="nav-number">3.</span> <span class="nav-text">三、缓存穿透</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#四、缓存并发"><span class="nav-number">4.</span> <span class="nav-text">四、缓存并发</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#五、缓存预热"><span class="nav-number">5.</span> <span class="nav-text">五、缓存预热</span></a></li></ol></div>
             
 
           </div>
